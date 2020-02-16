@@ -19,7 +19,7 @@ class RequestType extends AbstractType
         $builder
             ->add( 'title', TextType::class, ['label' =>'Заголовок'])
             ->add('content',TextareaType::class,['label' =>'Описание проблемы'])
-            ->add('imageFile',VichImageType::class,['label' =>'Изображение'])
+            ->add('imageFile',VichImageType::class,['label' =>'Изображение','attr'=> array('accept' => 'image/*')])
         ;
     }
 
