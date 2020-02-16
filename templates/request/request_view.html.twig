@@ -3,14 +3,23 @@
 {% block title %}Работа с заявкой{% endblock %}
 
 {% block body %}
+    <style>
+        .tech-img{
+            max-width: 1000px;
+            max-height: 800px;
+            margin:10px;
+        }
+    </style>
     <div class="container">
         <h1>Обработка заявки</h1>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
+            <div class="card bg-light card-form">
                 <div class="card-body">
                     <div>Заголовок: {{ requests.title }}</div>
                     <div>Текст: {{ requests.content }}</div>
-                    <div>Изображения: {{ requests.image }}</div>
+                    <div>Дата создания: {{ requests.createdat|date('d-m-Y H:i:s') }}</div>
+                    <div>Дата редактирования: {{ requests.updatedat|date('d-m-Y H:i:s') }}</div>
+                    <div><img class="tech-img" src="{{ vich_uploader_asset(requests, 'imageFile') }}" alt="{{ requests.title }}" /></div>
                     {{ form_start(form) }}
                     <div class="form-element">
                         <label for="textarea">{{ form_label(form.status) }}</label>

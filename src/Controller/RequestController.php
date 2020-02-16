@@ -7,6 +7,8 @@ use App\Form\RequestType;
 use App\Form\WorkType;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DomCrawler\Image;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +26,21 @@ class RequestController extends AbstractController
             'controller_name' => 'RequestController',
             'requests' => $requests
         ]);
+    }
+
+    /**
+     * @Route("/new-requests", name="new_requests")
+     */
+    public function newRequests()
+    {
+        $list = $this->getDoctrine()->getManager();
+        $requests = $list->getRepository(Request::class)->findAll();
+
+        $newReq = $this->renderView('_new_requests.html.twig',[
+            'requests' => $requests
+        ]);
+
+        return new Response($newReq);
     }
 
     /**
@@ -48,6 +65,7 @@ class RequestController extends AbstractController
             $request = $formCreate->getData();
             $request->setCreatedAt(new \DateTime('now'));
             $request->setStatus('Новая');
+
 
             $manager=$this->getDoctrine()->getManager();
             $manager->persist($request);
@@ -78,6 +96,7 @@ class RequestController extends AbstractController
         if ($formCreate->isSubmitted() and $formCreate->isValid()){ //валидации нет, проверка на непустое значение
             $request = $formCreate->getData();
             $request->setUpdatedAt(new \DateTime('now'));
+
 
             $manager=$this->getDoctrine()->getManager();
             $manager->persist($request);

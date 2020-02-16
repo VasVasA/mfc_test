@@ -15,10 +15,7 @@ class WorkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add( 'title', TextType::class, ['label' =>'Заголовок'])
-            //->add('content',TextareaType::class,['label' =>'Описание проблемы'])
             ->add('status',ChoiceType::class, array('choices'  => array('Новая' => "Новая", 'В работе' => "В работе", 'Завершена' => "Завершена", "Отменена"=>"Отменена"),'label'=>"Статус: "))
-            //->add('image',TextType::class, ['label' =>'Изображения'])
         ;
     }
 

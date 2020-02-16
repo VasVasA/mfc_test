@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
@@ -36,11 +36,6 @@ class Request
     private $status;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $image;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -52,11 +47,18 @@ class Request
 
     /**
      *
-     * @Vich\UploadableField(mapping="user_image", fileNameProperty="image", size="imageSize")
+     * @Vich\UploadableField(mapping="user_image", fileNameProperty="imageName", size="imageSize")
      *
      * @var File|null
      */
     private $imageFile;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
+     */
+    private $imageName;
 
     /**
      * @ORM\Column(type="integer")
@@ -64,6 +66,8 @@ class Request
      * @var int|null
      */
     private $imageSize;
+
+
     /**
      * @var \DateTimeImmutable
      */
@@ -110,17 +114,6 @@ class Request
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -146,10 +139,6 @@ class Request
         return $this;
     }
 
-    /**
-     * @param File|UploadedFile|null $imageFile
-     * @throws \Exception
-     */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -162,7 +151,12 @@ class Request
 
     public function setImageName(?string $imageName): void
     {
-        $this->image = $imageName;
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 
     public function setImageSize(?int $imageSize): void

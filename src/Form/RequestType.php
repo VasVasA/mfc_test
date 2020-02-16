@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Request;
+use PhpParser\Parser\Multiple;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,8 +19,7 @@ class RequestType extends AbstractType
         $builder
             ->add( 'title', TextType::class, ['label' =>'Заголовок'])
             ->add('content',TextareaType::class,['label' =>'Описание проблемы'])
-            //->add('image',TextType::class, ['label' =>'Изображения'])
-            ->add('imageFile',VichImageType::class, ['label' =>'Изображения'])
+            ->add('imageFile',VichImageType::class,['label' =>'Изображение'])
         ;
     }
 

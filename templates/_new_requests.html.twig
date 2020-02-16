@@ -1,0 +1,30 @@
+{% for request in requests | reverse %}
+    {% set difference = (date()|time_diff(request.createdat)) %}
+    {% if (difference == "diff.in.hour") and (request.status == "Новая") %}
+        <div class="bg-danger card text-white" id="id-{{ request.id }}">
+    {% else %}
+    {% if request.status == "Новая" %}
+        <div class="bg-primary card text-white" id="id-{{ request.id }}">
+    {% elseif request.status == "В работе" %}
+        <div class="bg-warning card text-white" id="id-{{ request.id }}">
+    {% elseif request.status == "Отменена" %}
+        <div class="bg-secondary card text-white" id="id-{{ request.id }}">
+    {% elseif request.status == "Завершена" %}
+        <div class="bg-success card text-white" id="id-{{ request.id }}">
+    {% endif %}
+    {% endif %}
+        <div class="card-body">
+            <div>Заголовок: {{ request.title }}</div>
+            <div>Текст: {{ request.content }}</div>
+            <div>Изображение: <a style="color:white;" href="{{ app.request.getUriForPath(vich_uploader_asset(request, 'imageFile')) }}">{{ request.imageName }}</a></div>
+            <div>Статус: {{ request.status }}</div>
+            <div>Дата создания: {{ request.createdat|date('d-m-Y H:i:s') }}</div>
+            <div class="text-white bg-white"><a href = "{{ path('request_view', {'request':request.id}) }}">Просмотреть</a></div>
+        </div>
+    </div>
+    {% block javascripts %}
+    <script>
+
+    </script>
+    {% endblock %}
+{% endfor %}
