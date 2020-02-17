@@ -1,1 +1,1 @@
-php bin/console doctrine:query:sql "DELETE from request where `updated_at` < NOW()-259200 and `status`<>'Новая'"
+php bin/console doctrine:query:sql "DELETE from request where `updated_at` < NOW()-259200 and (`status`='Завершена' or `status`='Отменена')"
